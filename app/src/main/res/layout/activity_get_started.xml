@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    tools:context=".GetStarted">
+
+    <TextView
+        android:id="@+id/getstarted_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="260dp"
+        android:gravity="center"
+        android:text="@string/be_part_of_someone_s_story"
+        android:textColor="@color/black"
+        android:textSize="@dimen/H1"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/getstarted_paragraph"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/getstarted_paragraph"
+        android:textColor="@color/black"
+        android:textSize="@dimen/H2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/getstarted_title" />
+
+    <Button
+        android:id="@+id/getstarted_create_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:background="@drawable/button_bg_primary_color"
+        android:hint="@string/create_account"
+        android:textColorHint="@color/white"
+        android:textSize="@dimen/H2"
+        app:layout_constraintTop_toBottomOf="@id/getstarted_paragraph" />
+
+    <Button
+        android:id="@+id/getstarted_signin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_bg_transparent"
+        android:hint="@string/sign_in"
+        android:textColorHint="@color/black"
+        android:textSize="@dimen/H2"
+        app:layout_constraintTop_toBottomOf="@id/getstarted_create_account" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
