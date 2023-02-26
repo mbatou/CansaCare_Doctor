@@ -27,5 +27,6 @@ i have used a Java code to make screen fullscreen mode (can be replaced by a new
 
 IMPORTANT : If you're onboarded please make sure to create a new branch before adding any line of code 😊
 
+Happy coding ✌🏾
 
 
