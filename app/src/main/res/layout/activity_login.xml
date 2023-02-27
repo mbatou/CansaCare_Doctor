@@ -36,7 +36,7 @@
         android:id="@+id/login_hint_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/username"
+        android:text="@string/email"
         app:layout_constraintBottom_toTopOf="@+id/login_username"
         app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -47,7 +47,7 @@
         android:layout_marginTop="84dp"
         android:autofillHints="username"
         android:background="@drawable/edit_text_field"
-        android:hint="@string/username"
+        android:hint="@string/email"
         android:inputType="text"
         android:padding="15dp"
         android:textColor="@color/black"

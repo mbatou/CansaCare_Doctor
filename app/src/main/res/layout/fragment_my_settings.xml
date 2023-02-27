@@ -1,10 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragmentsprofile.FragmentMySettings">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/profile_settings_termsandconditions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/settings_bg_button"
+            android:hint="@string/terms_and_conditions"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/H2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/profile_settings_privacypolicies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/settings_bg_button"
+            android:hint="@string/privacy_policies"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/H2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_settings_termsandconditions" />
+
+        <Button
+            android:id="@+id/profile_settings_about_cansacare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/settings_bg_button"
+            android:hint="@string/about_cansacare"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/H2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_settings_privacypolicies" />
+
+        <Button
+            android:id="@+id/profile_settings_faqs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/settings_bg_button"
+            android:hint="@string/faqs"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/H2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_settings_about_cansacare" />
+
+        <Button
+            android:id="@+id/profile_settings_reset_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/settings_bg_button"
+            android:hint="@string/reset_password"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/H2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_settings_faqs" />
+
+        <Button
+            android:id="@+id/profile_settings_bis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/settings_bg_button"
+            android:hint="@string/my_settings"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/H2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_settings_reset_password" />
+
+        <Button
+            android:id="@+id/profile_settings_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/settings_bg_button"
+            android:hint="@string/logout"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/H2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_settings_bis" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </FrameLayout>

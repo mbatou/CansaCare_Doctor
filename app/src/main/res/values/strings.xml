@@ -41,4 +41,12 @@
     <string name="services_offering">Services offering</string>
     <string name="service_offering_sample">Consulting</string>
     <string name="edit_profile">Edit profile</string>
+    <string name="terms_and_conditions">Terms and conditions</string>
+    <string name="privacy_policies">Privacy policies</string>
+    <string name="about_cansacare">About CansaCare</string>
+    <string name="faqs">FAQs</string>
+    <string name="reset_password">Reset password</string>
+    <string name="logout">Logout</string>
+    <string name="cansacare_logo">CansaCare Logo</string>
+    <string name="splash_screen_illustration">Splash screen illustration</string>
 </resources>
