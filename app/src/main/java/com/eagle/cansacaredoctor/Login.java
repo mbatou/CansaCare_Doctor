@@ -2,23 +2,30 @@ package com.eagle.cansacaredoctor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
+    EditText emailNewDoctor, passwordNewDoctor;
+    Button login;
 
-    Button login = findViewById(R.id.login_sign_in);
-    EditText emailEditText = findViewById(R.id.login_username);
-    EditText passwordEditText = findViewById(R.id.login_password);
-    TextView alreadyUser = findViewById(R.id.signup_already_user);
+    //    loginGoogle, loginFacebook;
+    TextView notUserYet;
 
+    String emailPattern = "^[A-Z\\d+_.-]+@[A-Z\\d.-]+$";
+
+    ProgressDialog progressDialog;
+    FirebaseUser mUser;
+    FirebaseAuth mAuth;
 
 
     @Override
@@ -26,30 +33,59 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        emailNewDoctor = findViewById(R.id.login_username);
+        passwordNewDoctor = findViewById(R.id.login_password);
+        login = findViewById(R.id.login_sign_in);
+        notUserYet = findViewById(R.id.login_not_user_create); // Initialize notUserYet TextView
+        progressDialog = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
 
-        login.setOnClickListener(v -> {
-            String email = emailEditText.getText().toString();
-            String password = passwordEditText.getText().toString();
-
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, task -> {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            mAuth.getCurrentUser();
-                            // Do something with the user information, e.g. start the next activity
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(Login.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-
-    });
-        alreadyUser.setOnClickListener(v -> {
-            Intent intent = new Intent(Login.this,CreateAccount.class);
+        notUserYet.setOnClickListener(v -> {
+            Intent intent = new Intent(Login.this, CreateAccount.class);
             startActivity(intent);
             finish();
         });
-}}
+
+        login.setOnClickListener(v -> perforLogin());
+    }
+
+    private void perforLogin() {
+
+        String email = emailNewDoctor.getText().toString().trim();
+        String password = passwordNewDoctor.getText().toString().trim();
+
+        if (!email.matches(emailPattern)) {
+            emailNewDoctor.setError("Please provide a valid email");
+        }
+        if (password.length() < 6) {
+            passwordNewDoctor.setError("Password empty or less than 6 characters");
+        }
+        if (email.isEmpty() || password.isEmpty()) {
+            emailNewDoctor.setError("This field has to be provided");
+            passwordNewDoctor.setError("This field has to be provided");
+        }
+        progressDialog.setMessage("Please wait while login");
+        progressDialog.setTitle("Login");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                progressDialog.dismiss();
+                SendUserToNextActivity();
+                Toast.makeText(Login.this, "Login done", Toast.LENGTH_LONG).show();
+            } else {
+                progressDialog.dismiss();
+                Toast.makeText(Login.this, "Login not done" + task.getException(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void SendUserToNextActivity() {
+        Intent intent = new Intent(Login.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+}
