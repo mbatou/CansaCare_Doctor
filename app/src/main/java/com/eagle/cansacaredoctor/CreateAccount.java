@@ -1,21 +1,18 @@
 package com.eagle.cansacaredoctor;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -24,6 +21,9 @@ public class CreateAccount extends AppCompatActivity {
     EditText firstName, lastName, emailNewDoctor, passwordNewDoctor;
     Button register, registerGoogle, registerFacebook;
     TextView alreadyUser;
+
+    GoogleSignInClient gsc;
+    GoogleSignInOptions gso;
 
     String emailPattern = "^[A-Z\\d+_.-]+@[A-Z\\d.-]+$";
 
@@ -43,7 +43,6 @@ public class CreateAccount extends AppCompatActivity {
         emailNewDoctor = findViewById(R.id.signup_email);
         passwordNewDoctor = findViewById(R.id.signup_password);
         register = findViewById(R.id.signup_create_account);
-        registerGoogle = findViewById(R.id.signup_with_google);
         registerFacebook = findViewById(R.id.signup_with_facebook);
         alreadyUser = findViewById(R.id.signup_to_signin);
         progressDialog = new ProgressDialog(this);
@@ -58,6 +57,13 @@ public class CreateAccount extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+
+
+
+        registerGoogle = findViewById(R.id.signup_with_google);
+
+
+
 
 
     }
