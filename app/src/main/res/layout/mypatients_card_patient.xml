@@ -19,12 +19,23 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/patients_name"
+                android:id="@+id/patients_firstname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/patient_name"
                 android:textSize="@dimen/H2"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/patients_lastname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/patient_name"
+                android:textSize="@dimen/H2"
+                android:layout_marginStart="3dp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@+id/patients_firstname"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
