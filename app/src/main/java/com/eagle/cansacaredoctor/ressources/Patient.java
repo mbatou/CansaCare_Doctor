@@ -1,15 +1,20 @@
 package com.eagle.cansacaredoctor.ressources;
 
-public class User {
-
-    public User(){}
+public class Patient {
 
     String email;
-    String password;
-
     String firstname;
     String lastname;
+    String password;
+    String typeofcancer;
 
+    public String getTypeofcancer() {
+        return typeofcancer;
+    }
+
+    public void setTypeofcancer(String typeofcancer) {
+        this.typeofcancer = typeofcancer;
+    }
 
     public String getEmail() {
         return email;
@@ -18,16 +23,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
 
     public String getFirstname() {
         return firstname;
@@ -45,8 +40,11 @@ public class User {
         this.lastname = lastname;
     }
 
-    public User(String firstname, String lastname) {
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

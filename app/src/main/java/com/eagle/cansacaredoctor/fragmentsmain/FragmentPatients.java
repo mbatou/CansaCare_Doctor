@@ -10,25 +10,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eagle.cansacaredoctor.R;
 import com.eagle.cansacaredoctor.adapter.MyAdapter;
+import com.eagle.cansacaredoctor.adapter.PatientAdapter;
+import com.eagle.cansacaredoctor.ressources.Patient;
 import com.eagle.cansacaredoctor.ressources.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class FragmentPatients extends Fragment {
-
-    RecyclerView recyclerView;
-    ArrayList<User> userArrayList;
-    MyAdapter myAdapter;
-    FirebaseFirestore db;
-    ProgressDialog progressDialog;
+    private final List<Patient> patients = new ArrayList<>(); // Define the list of patients
+    private DatabaseReference mDatabase;
 
     public FragmentPatients() {
         // Required empty public constructor
@@ -38,56 +44,45 @@ public class FragmentPatients extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference("User");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_patients, container, false);
-
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setCancelable(true);
-        progressDialog.setMessage("Please wait ...");
-        progressDialog.show();
+        View view =  inflater.inflate(R.layout.fragment_patients, container, false);
 
 
-        recyclerView = v.findViewById(R.id.patients_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(myAdapter);
+        RecyclerView recyclerView = view.findViewById(R.id.patients_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        db = FirebaseFirestore.getInstance();
-        userArrayList = new ArrayList<User>();
-        myAdapter = new MyAdapter(FragmentPatients.this, userArrayList);
+        PatientAdapter patientAdapter = new PatientAdapter(patients); // create a new instance of PatientAdapter
+        recyclerView.setAdapter(patientAdapter); // set the adapter for the RecyclerView
 
-        EventChangeListener();
+        // Read the posts from Firebase Realtime Database
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                patients.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Patient patient = dataSnapshot.getValue(Patient.class);
+                    patients.add(patient);
+                }
+                patientAdapter.notifyDataSetChanged(); // notify the adapter about the data changes
+            }
 
-        return v;
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("TAG", "onCancelled", error.toException());
+            }
+        });
 
+
+        return view;
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private void EventChangeListener() {
 
-        db.collection("User")
-                .addSnapshotListener((value, error) -> {
-                    if (error != null) {
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
-                        Log.e(TAG, "EventChangeListener: Listen failed.", error);
-                        return;
-                    }
-
-                    assert value != null;
-                    for (DocumentChange dc : value.getDocumentChanges()) {
-                        if (dc.getType() == DocumentChange.Type.ADDED) {
-                            userArrayList.add(dc.getDocument().toObject(User.class));
-                        }
-                    }
-
-                    myAdapter.notifyDataSetChanged();
-                });
-    }
 
 }

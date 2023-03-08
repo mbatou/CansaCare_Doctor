@@ -49,4 +49,6 @@
     <string name="logout">Logout</string>
     <string name="cansacare_logo">CansaCare Logo</string>
     <string name="splash_screen_illustration">Splash screen illustration</string>
+    <string name="completed">Completed</string>
+    <string name="data_sample">January 3,2023</string>
 </resources>

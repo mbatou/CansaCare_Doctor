@@ -75,7 +75,7 @@ public class CreateAccount extends AppCompatActivity {
         registerGoogle.setOnClickListener(v -> {
             Intent signInIntent = gsc.getSignInIntent();
             startActivityForResult(signInIntent, GOOGLE_SIGN_IN_REQUEST_CODE);
-//            SendUserToNextActivity();
+            SendUserToNextActivity();
         });
     }
 
