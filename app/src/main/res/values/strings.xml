@@ -2,8 +2,8 @@
     <string name="app_name">CansaCare Doctor</string>
     <string name="be_part_of_someone_s_story">Be part of someone\'s story</string>
     <string name="getstarted_paragraph">Appointments reminders, online bookings, easy payments and serving a greater cause with your service</string>
-    <string name="create_account">Create Account</string>
-    <string name="sign_in">Sign in</string>
+    <string name="create_account"> Create Account</string>
+    <string name="sign_in"> Sign in</string>
     <string name="back_button">back_button</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -51,4 +51,12 @@
     <string name="splash_screen_illustration">Splash screen illustration</string>
     <string name="completed">Completed</string>
     <string name="data_sample">January 3,2023</string>
+    <string name="my_earnings">My earnings</string>
+    <string name="this_week">This week</string>
+    <string name="you_have_completed_0_bookings">You have completed 0 bookings</string>
+    <string name="date_range">6th Mar - 12th Mar</string>
+    <string name="total_earnings">Total earnings :</string>
+    <string name="history">History</string>
+    <string name="earning_prompt">earning</string>
+    <string name="charge_prompt">charge</string>
 </resources>
