@@ -5,6 +5,8 @@ please make sure to migrate to AndroidX before cloning to having version differe
 please make sure to implement these dependencies before going further 
 
 {
+    
+    
     implementation 'androidx.appcompat:appcompat:1.6.1'
     
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
