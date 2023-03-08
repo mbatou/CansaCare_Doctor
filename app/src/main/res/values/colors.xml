@@ -15,4 +15,6 @@
     <color name="gray_color">#D9D9D9</color>
     <color name="edit_text_field_bg">#F6F6F6</color>
     <color name="edit_text_field_stroke">#E8E8E8</color>
+    <color name="earnings_recap_card">#D9DBF7</color>
+    <color name="earnings_charge_red">#FF5353</color>
 </resources>
