@@ -17,4 +17,5 @@
     <color name="edit_text_field_stroke">#E8E8E8</color>
     <color name="earnings_recap_card">#D9DBF7</color>
     <color name="earnings_charge_red">#FF5353</color>
+    <color name="appointment_booked">#9295BC</color>
 </resources>

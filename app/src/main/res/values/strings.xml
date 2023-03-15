@@ -59,4 +59,19 @@
     <string name="history">History</string>
     <string name="earning_prompt">earning</string>
     <string name="charge_prompt">charge</string>
+    <string name="session_booked">Session booked!</string>
+    <string name="notifications">notifications</string>
+    <string name="join_call">Join call</string>
+    <string name="appointment_details">Appointment details :</string>
+    <string name="date">Date :</string>
+    <string name="time">Time :</string>
+    <string name="patient_details">Patient details</string>
+    <string name="age">Age :</string>
+    <string name="status">Status :</string>
+    <string name="mode">Mode :</string>
+    <string name="online_call">Online call</string>
+    <string name="sample_age">31</string>
+    <string name="diagnosed">Diagnosed</string>
+    <string name="reason">Reason :</string>
+    <string name="cancel_appointment">Cancel appointment</string>
 </resources>
