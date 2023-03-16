@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder>{
+public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder> {
 
     private final List<Appointment> appointments;
     private final CollectionReference databaseReferenceStore = FirebaseFirestore.getInstance().collection("User");
@@ -36,7 +36,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     @Override
     public AppointmentAdapter.AppointmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.appointment_card, parent, false);
-        return new AppointmentAdapter.AppointmentViewHolder(view);    }
+        return new AppointmentAdapter.AppointmentViewHolder(view);
+    }
 
     @Override
     public void onBindViewHolder(@NonNull AppointmentAdapter.AppointmentViewHolder holder, int position) {
@@ -44,7 +45,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         // Get the post at the current position
         Appointment appointment = appointments.get(position);
 
-            // Bind the data to the views
+        // Bind the data to the views
         holder.appointmentTimeView.setText(appointment.getTime());
         holder.appointmentDate.setText(appointment.getDate());
 //        holder.appointmentType.setText(appointment.getType());
@@ -61,7 +62,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 //            intent.putExtra("postId", notification.getId());
 
             // Start the new activity
-            v.getContext().startActivity(intent);
+//            v.getContext().startActivity(intent);
         });
     }
 
@@ -70,19 +71,18 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         return appointments.size();
     }
 
-    static class AppointmentViewHolder extends RecyclerView.ViewHolder{
+    static class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
         TextView appointmentTimeView, appointmentDate;
         TextView appointmentPatientName;
 
 
-
         public AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            appointmentPatientName =itemView.findViewById(R.id.appointment_card_patient_name);
-            appointmentTimeView =itemView.findViewById(R.id.appointment_time);
-            appointmentDate =itemView.findViewById(R.id.appointment_date);
+            appointmentPatientName = itemView.findViewById(R.id.appointment_card_patient_name);
+            appointmentTimeView = itemView.findViewById(R.id.appointment_time);
+            appointmentDate = itemView.findViewById(R.id.appointment_date);
         }
     }
 }
