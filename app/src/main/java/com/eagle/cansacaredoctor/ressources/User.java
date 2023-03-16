@@ -1,5 +1,7 @@
 package com.eagle.cansacaredoctor.ressources;
 
+import android.widget.EditText;
+
 public class User {
 
     public User(){}
@@ -10,6 +12,37 @@ public class User {
     String firstname;
     String lastname;
 
+    String userId;
+
+    String displayName;
+
+
+
+    public User(String firstName, String lastName, String email, String password, String userId, String displayName) {
+        this.firstname = firstName;
+        this.lastname = lastName;
+        this.email = email;
+        this.password = password;
+        this.userId = userId;
+        this.displayName = displayName;
+
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getEmail() {
         return email;

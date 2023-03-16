@@ -96,17 +96,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_sign_in" />
 
-    <Button
-        android:id="@+id/login_with_facebook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/button_bg_transparent"
-        android:drawableStart="@drawable/facebook_ic"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="@string/continue_with_facebook"
-        app:layout_constraintTop_toBottomOf="@id/login_divider" />
 
     <Button
         android:id="@+id/login_with_google"
@@ -117,8 +106,8 @@
         android:drawableStart="@drawable/google_ic"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="@string/continue_with_facebook"
-        app:layout_constraintTop_toBottomOf="@id/login_with_facebook" />
+        android:text="@string/continue_with_google"
+        app:layout_constraintTop_toBottomOf="@id/login_divider" />
 
     <TextView
         android:id="@+id/login_not_user_yet"

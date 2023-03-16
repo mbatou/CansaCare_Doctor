@@ -1,7 +1,5 @@
 package com.eagle.cansacaredoctor;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.eagle.cansacaredoctor.ressources.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -18,15 +19,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
 public class CreateAccount extends AppCompatActivity {
 
     private static final int GOOGLE_SIGN_IN_REQUEST_CODE = 100;
-    EditText firstName, lastName, emailNewDoctor, passwordNewDoctor;
-    Button register, registerGoogle, registerFacebook;
+    EditText firstNameDoctor, lastNameDoctor, emailNewDoctor, passwordNewDoctor;
+    Button register, registerGoogle;
     TextView alreadyUser;
+
+    String userId, displayName;
 
     GoogleSignInClient gsc;
     GoogleSignInOptions gso;
@@ -35,6 +37,8 @@ public class CreateAccount extends AppCompatActivity {
 
     ProgressDialog progressDialog;
     FirebaseAuth mAuth;
+
+    FirebaseFirestore firebaseFirestore;
     FirebaseUser mUser;
 
     @Override
@@ -43,22 +47,28 @@ public class CreateAccount extends AppCompatActivity {
         setContentView(R.layout.activity_create_account);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        firstName = findViewById(R.id.signup_first_name);
-        lastName = findViewById(R.id.signup_last_name);
+        firstNameDoctor = findViewById(R.id.signup_first_name);
+        lastNameDoctor = findViewById(R.id.signup_last_name);
         emailNewDoctor = findViewById(R.id.signup_email);
         passwordNewDoctor = findViewById(R.id.signup_password);
+
         register = findViewById(R.id.signup_create_account);
-        registerFacebook = findViewById(R.id.signup_with_facebook);
         alreadyUser = findViewById(R.id.signup_to_signin);
+
         progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Creating account...");
+        progressDialog.setCancelable(false);
+
         mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        ;
 
         register.setOnClickListener(v -> performAuth());
 
         alreadyUser.setOnClickListener(v -> {
             Intent intent = new Intent(CreateAccount.this, Login.class);
-            startActivity(intent);
             startActivity(intent);
             finish();
         });
@@ -75,56 +85,38 @@ public class CreateAccount extends AppCompatActivity {
         registerGoogle.setOnClickListener(v -> {
             Intent signInIntent = gsc.getSignInIntent();
             startActivityForResult(signInIntent, GOOGLE_SIGN_IN_REQUEST_CODE);
-            SendUserToNextActivity();
         });
     }
 
     private void performAuth() {
 
+        //Collecting all the information's provided
         String email = emailNewDoctor.getText().toString().trim();
         String password = passwordNewDoctor.getText().toString().trim();
-        String firstname = firstName.getText().toString().trim();
-        String lastname = lastName.getText().toString().trim();
+        String firstname = firstNameDoctor.getText().toString().trim();
+        String lastname = lastNameDoctor.getText().toString().trim();
 
-        if (!email.matches(emailPattern)) {
-            emailNewDoctor.setError("Please provide a valid email");
-        }
-        if (password.isEmpty() || password.length() < 6) {
-            passwordNewDoctor.setError("Password empty or less than 6 characters");
-        }
-        if (lastname.isEmpty() || firstname.isEmpty()) {
-            firstName.setError("This field has to be provided");
-            lastName.setError("This field has to be provided");
-        }
-        progressDialog.setMessage("Please wait while registration");
-        progressDialog.setTitle("Registration");
-        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+        mAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
 
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                FirebaseUser user = mAuth.getCurrentUser();
-                assert user != null;
-                String uid = user.getUid();
+            //create user in Firebase Firestore
+            firebaseFirestore.collection("Doctors")
+                    .document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
+                    .set(new User(firstname, lastname, email, password, userId = FirebaseAuth.getInstance().getUid(), displayName = firstname + " " + lastname))
+                    .addOnSuccessListener(aVoid -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(CreateAccount.this, "User created successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(CreateAccount.this, MainActivity.class));
+                        SendUserToNextActivity();
+                    })
+                    .addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(CreateAccount.this, "Error creating user: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
 
-                // Create a new document with the user's data in the "doctors" collection
-                Map<String, Object> userData = new HashMap<>();
-                userData.put("firstName", firstname);
-                userData.put("lastName", lastname);
-                userData.put("email", email);
-                FirebaseFirestore.getInstance().collection("doctors").document(uid).set(userData)
-                        .addOnSuccessListener(aVoid -> {
-                            Toast.makeText(CreateAccount.this, "Registration done", Toast.LENGTH_LONG).show();
-                            SendUserToNextActivity();
-                        })
-                        .addOnFailureListener(e -> {
-                            progressDialog.dismiss();
-                            Toast.makeText(CreateAccount.this, "Registration not done" + e.getMessage(), Toast.LENGTH_LONG).show();
-                        });
-            } else {
-                progressDialog.dismiss();
-                Toast.makeText(CreateAccount.this, "Registration not done" + task.getException(), Toast.LENGTH_LONG).show();
-            }
+        }).addOnFailureListener(e -> {
+            Toast.makeText(CreateAccount.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
         });
     }
 
@@ -132,4 +124,5 @@ public class CreateAccount extends AppCompatActivity {
         Intent intent = new Intent(CreateAccount.this, MainActivity.class);
         startActivity(intent);
         finish();
-    }}
+    }
+}
